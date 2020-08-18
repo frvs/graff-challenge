@@ -1,15 +1,18 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Graff.Api.Entities.ValueObjects
 {
-    public abstract class Entity : IEquatable<Entity>
+    public class Entity : IEquatable<Entity>
     {
+        
         public Entity()
         {
             Id = Guid.NewGuid().ToString();
         }
 
-        public string Id { get; }
+        [Key]
+        public string Id { get; set; }
 
         public bool Equals(Entity other)
         {

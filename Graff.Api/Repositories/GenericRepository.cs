@@ -1,6 +1,7 @@
 ﻿using Graff.Api.Entities.ValueObjects;
 using Graff.Api.Repositories.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,15 +10,18 @@ namespace Graff.Api.Repositories
     public class GenericRepository<T> where T: Entity
     {
         private DataContext _context;
+        private DbSet<T> entities;
 
         public GenericRepository(DataContext context)
         {
             _context = context;
+            entities = context.Set<T>();
         }
 
         public string Create(T obj)
         {
-            _context.Set<T>().Add(obj);
+            if (obj == null) throw new ArgumentNullException("entity");
+            entities.Add(obj);
             var rowsAffected = _context.SaveChanges();
 
             return rowsAffected == 1 ? obj.Id : string.Empty;
@@ -25,25 +29,25 @@ namespace Graff.Api.Repositories
        
         public void Update(T obj)
         {
-            _context.Set<T>().Update(obj);
+            entities.Update(obj);
             _context.SaveChanges();
         }
 
         public void Delete(string id)
         {
             var entity = GetById(id);
-            _context.Set<T>().Remove(entity);
+            entities.Remove(entity);
             _context.SaveChanges();
         }
 
         public T GetById(string id)
         {
-            return _context.Set<T>().Find(id);
+            return entities.Find(id);
         }
 
         public List<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking().ToList();
+            return entities.AsNoTracking().ToList();
         }
     }
 }

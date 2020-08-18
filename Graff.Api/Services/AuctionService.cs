@@ -13,16 +13,20 @@ namespace Graff.Api.Services
         private GenericRepository<Bid> _bidRepository;
         private GenericRepository<Person> _personRepository;
 
-        public AuctionService(
-            GenericRepository<Product> productRepository, 
-            GenericRepository<Bid> bidRepository, 
-            GenericRepository<Person> personRepository)
+        public AuctionService(GenericRepository<Product> productRepository, GenericRepository<Bid> bidRepository, GenericRepository<Person> personRepository)
         {
             _productRepository = productRepository;
             _bidRepository = bidRepository;
             _personRepository = personRepository;
         }
        
+        public string AddNewProduct(Product product)
+        {
+            var id = _productRepository.Create(product);
+
+            return id;
+        }
+
         public string AddNewPerson(Person person)
         {
             var id = _personRepository.Create(person);
@@ -30,17 +34,36 @@ namespace Graff.Api.Services
             return id;
         }
 
-        public string AddNewBid(string personId, string productId, decimal value)
+        public string AddNewBid(Bid bid)
         {
-            ValidatePersonExists(personId);
+            ValidatePersonExists(bid.OwnerId);
 
-            var product = _productRepository.GetById(productId);
+            var product = _productRepository.GetById(bid.ProductId);
 
             ValidateProductFound(product);
-            ValidateNewBidMustBiggerThanLast(product, value);
+            ValidateNewBidMustBiggerThanLast(product, bid.Value);
             
-            var id = _bidRepository.Create(new Bid(personId, productId, value));
+            var id = _bidRepository.Create(bid);
             return id;
+        }
+
+        public List<Product> GetAllProducts()
+        {
+            var products = _productRepository.GetAll();
+            var bids = _bidRepository.GetAll();
+
+            LoadBids(products, bids);
+
+            return products;
+        }
+
+        private void LoadBids(List<Product> products, List<Bid> bids)
+        {
+            foreach (var productIds in bids.Select(bids => bids.ProductId).Distinct())
+            {
+                var product = products.First(p => p.Id == productIds);
+                product.Bids = bids.Where(b => b.ProductId == product.Id).ToList();
+            }
         }
 
         public List<Bid> GetBidsByPersonId(string personId)
@@ -53,7 +76,7 @@ namespace Graff.Api.Services
 
         private void ValidateProductFound([AllowNull] Product product)
         {
-            if (product != null)
+            if (product == null)
             {
                 throw new Exception("Produto não encontrado!");
             }
@@ -63,7 +86,7 @@ namespace Graff.Api.Services
         {
             if (product.CurrentValue >= value)
             {
-                throw new Exception("Seu lance deve ser maior do que o último.");
+                throw new Exception($"Seu lance deve ser maior do que o último (R$ {product.CurrentValue}).");
             }
         }
 

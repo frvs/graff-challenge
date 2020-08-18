@@ -1,4 +1,5 @@
 ﻿using Graff.Api.Entities.ValueObjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace Graff.Api.Entities
 {
@@ -14,7 +15,9 @@ namespace Graff.Api.Entities
             Age = age;
         }
 
+        [Required]
         public string Name { get; set; }
+        [Required]
         public int Age { get; set; }
     }
 }
