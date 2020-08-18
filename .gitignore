@@ -1,0 +1,10 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Graff.Api/.vs/Graff.Api/v16
+/Graff.Api/bin/Debug/netcoreapp3.1
+/Graff.Api/obj
+/Graff.Api/Properties
+*.user
