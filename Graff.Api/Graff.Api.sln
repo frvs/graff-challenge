@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graff.Api", "Graff.Api.csproj", "{172CB178-BC82-471A-835B-F83CDF0CA10A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graff.Api", "Graff.Api.csproj", "{172CB178-BC82-471A-835B-F83CDF0CA10A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\Tests\Tests.csproj", "{2E90AE34-3775-4DA3-97EF-F5F1760FD7EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{172CB178-BC82-471A-835B-F83CDF0CA10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{172CB178-BC82-471A-835B-F83CDF0CA10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{172CB178-BC82-471A-835B-F83CDF0CA10A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E90AE34-3775-4DA3-97EF-F5F1760FD7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E90AE34-3775-4DA3-97EF-F5F1760FD7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E90AE34-3775-4DA3-97EF-F5F1760FD7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E90AE34-3775-4DA3-97EF-F5F1760FD7EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
