@@ -1,0 +1,1 @@
+﻿SELECT * FROM Bid WHERE ProductId IN (SELECT Id from Product WHERE Name = 'Lucas Frois')
